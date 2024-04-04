@@ -7,7 +7,7 @@ You can use the [OpenAPI documentation of the REST API](/openapi.yml) to discove
 **Prerequisites:** you need to have a Java Development Kit (JDK) version 11 or later
 
 ```bash
-cd backend
+cd backend/spring-java
 ./gradlew bootRun
 ```
 

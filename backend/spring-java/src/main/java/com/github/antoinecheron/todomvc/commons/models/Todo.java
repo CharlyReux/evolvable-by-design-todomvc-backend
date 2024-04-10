@@ -8,7 +8,7 @@ public class Todo {
 
   @Id
   private final String id;
-  private final String title;
+  private final String name;
   private final boolean completed;
 
 }

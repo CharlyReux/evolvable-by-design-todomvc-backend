@@ -5,7 +5,7 @@ import lombok.Value;
 @Value
 public class TodoUpdateRequest {
 
-  private final String title;
+  private final String name;
   private final boolean completed;
 
 }

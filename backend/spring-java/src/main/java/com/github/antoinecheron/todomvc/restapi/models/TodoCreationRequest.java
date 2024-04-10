@@ -5,6 +5,6 @@ import lombok.Value;
 @Value
 public class TodoCreationRequest {
 
-  private final String title;
+  private final String name;
 
 }

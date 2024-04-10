@@ -33,7 +33,7 @@ public class TodoController {
   public Mono<HypermediaRepresentation<Todo>> createTodo (@RequestBody Publisher<TodoCreationRequest> todoCreationRequestStream) {
     return Mono.fromDirect(todoCreationRequestStream)
       .flatMap(Validators::validateTodoCreationRequest)
-      .flatMap(todoCreationRequest -> todoService.create(todoCreationRequest.getTitle()))
+      .flatMap(todoCreationRequest -> todoService.create(todoCreationRequest.getName()))
       .map(TodoController::addHypermediaControls);
   }
 
@@ -41,7 +41,7 @@ public class TodoController {
   public Mono<HypermediaRepresentation<Todo>> updateTodo(@PathVariable String id, @RequestBody Publisher<TodoUpdateRequest> todoUpdateRequestStream) {
     return Mono.fromDirect(todoUpdateRequestStream)
       .flatMap(Validators::validateTodoUpdateRequest)
-      .flatMap(todoUpdateRequest -> todoService.update(id, todoUpdateRequest.getTitle(), todoUpdateRequest.isCompleted()))
+      .flatMap(todoUpdateRequest -> todoService.update(id, todoUpdateRequest.getName(), todoUpdateRequest.isCompleted()))
       .map(TodoController::addHypermediaControls);
   }
 

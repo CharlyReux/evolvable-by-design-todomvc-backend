@@ -94,7 +94,7 @@ paths:
               x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/update
               parameters:
                 id: '$response.body#/id'
-                title: '$response.body#/title'
+                name: '$response.body#/name'
                 completed: '$response.body#/completed'
             delete:
               operationId: deleteTodoById
@@ -139,7 +139,7 @@ paths:
               x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/update
               parameters:
                 id: '$response.body#/id'
-                title: '$response.body#/title'
+                name: '$response.body#/name'
                 completed: '$response.body#/completed'
             delete:
               operationId: deleteTodoById
@@ -197,14 +197,14 @@ components:
     Todo:
       x-@type: http://evolvable-by-design.github.io/vocabs/todomvc#Todo
       type: object
-      required: ['id', 'title', 'completed']
+      required: ['id', 'name', 'completed']
       properties:
         id:
           type: string
           x-@id:
             - http://evolvable-by-design.github.io/vocabs/todomvc#todoId
             - '@id'
-        title:
+        name:
           type: string
           minLength: 1
           x-@id: http://schema.org/name
@@ -213,17 +213,17 @@ components:
           x-@id: http://evolvable-by-design.github.io/vocabs/todomvc#completed
     TodoCreationRequest:
       type: object
-      required: ['title']
+      required: ['name']
       properties:
-        title:
+        name:
           type: string
           minLength: 1
           x-@id: http://schema.org/name
     TodoUpdateRequest:
       type: object
-      required: ['title', 'completed']
+      required: ['name', 'completed']
       properties:
-        title:
+        name:
           type: string
           minLength: 1
           x-@id: http://schema.org/name

@@ -14,18 +14,18 @@ final class Validators {
   private Validators() {}
 
   static Mono<TodoCreationRequest> validateTodoCreationRequest (TodoCreationRequest toValidate) {
-    if (!toValidate.getTitle().isEmpty() && !toValidate.getTitle().isBlank()) {
+    if (!toValidate.getName().isEmpty() && !toValidate.getName().isBlank()) {
       return Mono.just(toValidate);
     } else {
-      return Mono.error(new ApiError("Incorrect title, it must not be empty neither blank", 400));
+      return Mono.error(new ApiError("Incorrect name, it must not be empty neither blank", 400));
     }
   }
 
   static Mono<TodoUpdateRequest> validateTodoUpdateRequest (TodoUpdateRequest toValidate) {
-    if (isValid(toValidate.getTitle())) {
+    if (isValid(toValidate.getName())) {
       return Mono.just(toValidate);
     } else {
-      return Mono.error(new ApiError("Incorrect title, it must not be empty neither blank", 400));
+      return Mono.error(new ApiError("Incorrect name, it must not be empty neither blank", 400));
     }
   }
 

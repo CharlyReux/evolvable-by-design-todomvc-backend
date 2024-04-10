@@ -28,18 +28,18 @@ public class TodoService {
     return this.todoRepository.findById(id);
   }
 
-  public Mono<Todo> create(String title) {
+  public Mono<Todo> create(String name) {
     final var todo = new Todo(
       UUID.randomUUID().toString(),
-      title,
+      name,
       false
     );
 
     return this.todoRepository.create(todo);
   }
 
-  public Mono<Todo> update(String id, String title, boolean completed) {
-    return this.todoRepository.update(new Todo(id, title, completed));
+  public Mono<Todo> update(String id, String name, boolean completed) {
+    return this.todoRepository.update(new Todo(id, name, completed));
   }
 
   public Mono<Void> delete(String id) {

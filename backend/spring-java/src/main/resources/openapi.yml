@@ -104,7 +104,7 @@ paths:
             listAll:
               operationId: listTodos
               x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/listAll
-
+    
   /todo/{id}:
     parameters:
       - name: id
@@ -115,6 +115,35 @@ paths:
           x-@id:
             - http://evolvable-by-design.github.io/vocabs/todomvc#todoId
             - '@id'
+    get:
+      summary: get a  todo
+      x-@id: http://evolvable-by-design.github.io/vocabs/todomvc#getTodo
+      operationId: getTodo
+      tags:
+        - todo
+      responses:
+        '201':
+          description: The todo you got
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+          links:
+            update:
+              operationId: updateTodo
+              x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/update
+              parameters:
+                id: '$response.body#/id'
+                title: '$response.body#/title'
+                completed: '$response.body#/completed'
+            delete:
+              operationId: deleteTodoById
+              x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/delete
+              parameters:
+                id: '$response.body#/id'
+            listAll:
+              operationId: listTodos
+              x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/listAll
     put:
       summary: Update an existing todo
       operationId: updateTodo
@@ -196,6 +225,7 @@ components:
         $ref: '#/components/schemas/Todo'
     Todo:
       x-@type: http://evolvable-by-design.github.io/vocabs/todomvc#Todo
+      x-@id: http://evolvable-by-design.github.io/vocabs/todomvc#Todo
       type: object
       required: ['id', 'title', 'completed']
       properties:

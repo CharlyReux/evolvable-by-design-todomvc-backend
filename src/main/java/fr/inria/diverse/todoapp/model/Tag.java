@@ -31,6 +31,12 @@ public class Tag {
         this.name = name;
     }
 
+    public void setNameIfNotNull(String tagName) {
+        if(tagName != null) {
+            this.setName(tagName);
+        }
+    }
+
 
     
 }

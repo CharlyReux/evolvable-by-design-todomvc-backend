@@ -48,6 +48,18 @@ public class Todo {
         this.completed = completed;
     }
 
+    public void setTitleIfNotNull(String todoName) {
+        if(todoName != null) {
+            this.setTitle(todoName);
+        }
+    }
+
+    public void setCompletedIfNotNull(boolean completed) {
+        if(completed) {
+            this.setCompleted(completed);
+        }
+    }
+
     
 
 

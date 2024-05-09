@@ -4,8 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-import javax.swing.text.html.Option;
+import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +30,7 @@ import fr.inria.diverse.todoapp.model.TodoUpdateRequest;
 import fr.inria.diverse.todoapp.repository.AuthorRepository;
 import fr.inria.diverse.todoapp.repository.TagRepository;
 import fr.inria.diverse.todoapp.repository.TodoRepository;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 
@@ -48,17 +49,17 @@ public class TodoController {
         this.authorRepository = authorRepository;
     }
 
-    //todo - Add the semantic links to the response
+    // todo - Add the semantic links to the response
     @GetMapping("/todos")
     ResponseEntity<List<Todo>> getAllTodos(@RequestParam(required = false) String status) {
-        if (status == null || status == "all")
+        if (status == null || status.equals("all"))
             return ResponseEntity.ok(todoRepository.findAll());
         Boolean statusBool = status.equals("completed") ? true : false;
         return ResponseEntity.ok(todoRepository.findAllByCompleted(statusBool));
     }
 
     @GetMapping("/todo/{id}")
-    ResponseEntity<Semantic<Todo>> getTodoById(@RequestParam String id) {
+    ResponseEntity<Semantic<Todo>> getTodoById(@PathVariable UUID id) {
         Optional<Todo> todo = todoRepository.findById(id);
         if (todo.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -68,17 +69,19 @@ public class TodoController {
         return ResponseEntity.ok(semanticTodo);
     }
 
-        //todo - Add the semantic links to the response
+    // todo - Add the semantic links to the response
     @DeleteMapping("/todo/{id}")
-    ResponseEntity<Void> deleteTodoById(@RequestParam String id) {
+    @Transactional
+    ResponseEntity<Void> deleteTodoById(@PathVariable UUID id) {
         todoRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
-    //todo - Add the semantic links to the response
+    // todo - Add the semantic links to the response
     @DeleteMapping("/todos")
+    @Transactional
     ResponseEntity<Void> deleteTodosByStatus(@RequestParam String status) {
-        if (status == null || status == "all")
+        if (status == null || status.equals("all"))
             todoRepository.deleteAll();
         Boolean statusBool = status.equals("completed") ? true : false;
         todoRepository.deleteByCompleted(statusBool);
@@ -86,28 +89,26 @@ public class TodoController {
     }
 
     @PutMapping("/todo/{id}")
-    ResponseEntity<Semantic<Todo>> updateTodoStatus(@Valid @RequestBody TodoUpdateRequest todoUpdateRequest,
-            @RequestParam String id) {
+    ResponseEntity<Semantic<Todo>> updateTodo(@Valid @RequestBody TodoUpdateRequest todoUpdateRequest,
+            @PathVariable UUID id) {
         // saving todo
         Todo todo = todoRepository.findById(id).get();
-        todo.setTitle(todoUpdateRequest.getTodoName());
-        todo.setCompleted(todoUpdateRequest.getCompleted());
+        todo.setTitleIfNotNull(todoUpdateRequest.getTodoName());
+        todo.setCompletedIfNotNull(todoUpdateRequest.getCompleted());
         todoRepository.save(todo);
         // saving author
         Author author = authorRepository.findById(id).get();
-        author.setName(todoUpdateRequest.getAuthorName());
+        author.setNameIfNotNull(todoUpdateRequest.getAuthorName());
         authorRepository.save(author);
         // saving tag
         Tag tag = tagRepository.findById(id).get();
-        tag.setName(todoUpdateRequest.getTagName());
+        tag.setNameIfNotNull(todoUpdateRequest.getTagName());
         tagRepository.save(tag);
         Semantic<Todo> semanticTodo = Semantic.of(todo).withLinks(List.of("updateTodo", "deleteTodoById", "listTodos"));
         return ResponseEntity.ok(semanticTodo);
     }
 
-    @PostMapping(value="/todo",
-            consumes = "application/json",
-            produces = "application/json")
+    @PostMapping(value = "/todo", consumes = "application/json", produces = "application/json")
     ResponseEntity<Semantic<Todo>> updateTodoStatus(@Valid @RequestBody TodoCreationRequest todoCreationRequest) {
         // saving todo
         Todo todo = new Todo(todoCreationRequest.getTodoTitle(), false);
@@ -121,6 +122,7 @@ public class TodoController {
         Semantic<Todo> semanticTodo = Semantic.of(todo).withLinks(List.of("updateTodo", "deleteTodoById", "listTodos"));
         return ResponseEntity.ok(semanticTodo);
     }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(

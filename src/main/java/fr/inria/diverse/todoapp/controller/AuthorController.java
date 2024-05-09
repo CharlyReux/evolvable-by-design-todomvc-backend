@@ -1,9 +1,11 @@
 package fr.inria.diverse.todoapp.controller;
 
+import java.util.UUID;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.inria.diverse.todoapp.model.Author;
@@ -21,7 +23,7 @@ public class AuthorController {
 
 
     @GetMapping("/todo/{id}/author")
-    ResponseEntity<Author> getAuthorByTodoId(@RequestParam String id) {
+    ResponseEntity<Author> getAuthorByTodoId(@PathVariable UUID id) {
         return ResponseEntity.of(authorRepository.findById(id));
     }
 

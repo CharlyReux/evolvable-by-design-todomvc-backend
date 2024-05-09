@@ -31,6 +31,12 @@ public class Author {
         this.name = name;
     }
 
+    public void setNameIfNotNull(String authorName) {
+        if(authorName != null) {
+            this.setName(authorName);
+        }
+    }
+
 
 
     

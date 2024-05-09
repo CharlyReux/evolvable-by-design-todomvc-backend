@@ -54,8 +54,8 @@ public class Todo {
         }
     }
 
-    public void setCompletedIfNotNull(boolean completed) {
-        if(completed) {
+    public void setCompletedIfNotNull(Boolean completed) {
+        if(completed != null) {
             this.setCompleted(completed);
         }
     }

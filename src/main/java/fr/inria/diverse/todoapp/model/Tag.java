@@ -8,21 +8,21 @@ import jakarta.persistence.Id;
 @Entity
 public class Tag {
     @Id
-    private UUID id;
+    private UUID todoId;
     private String name;
 
     public Tag() {
     }
 
     public Tag(UUID id, String name) {
-        this.id = id;
+        this.todoId = id;
         this.name = name;
     }
-    public UUID getId() {
-        return id;
+    public UUID getTodoId() {
+        return todoId;
     }
-    public void setId(UUID id) {
-        this.id = id;
+    public void setTodoId(UUID id) {
+        this.todoId = id;
     }
     public String getName() {
         return name;

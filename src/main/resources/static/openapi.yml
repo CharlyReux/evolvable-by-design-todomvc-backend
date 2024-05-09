@@ -38,12 +38,9 @@ paths:
                 $ref: '#/components/schemas/TodoCollection'
           links:
             createTodo:
-              operationId: createTodo
-              x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/create
+              $ref: '#/components/links/createTodo'
             deleteMany:
-              operationId: deleteTodosByStatus
-              x-@relation: >-
-                http://evolvable-by-design.github.io/vocabs/todomvc#rel/deleteMany
+              $ref: '#/components/links/deleteMany'
     delete:
       summary: >-
         Delete the todos with the selected status, by default the completed
@@ -90,20 +87,21 @@ paths:
                 $ref: '#/components/schemas/Todo'
           links:
             update:
-              operationId: updateTodo
-              x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/update
-              parameters:
-                id: $response.body#/id
-                title: $response.body#/title
-                completed: $response.body#/completed
+              $ref: '#/components/links/update'
             delete:
-              operationId: deleteTodoById
-              x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/delete
-              parameters:
-                id: $response.body#/id
+              $ref: '#/components/links/delete'
             listAll:
-              operationId: listTodos
-              x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/listAll
+              $ref: '#/components/links/listAll'
+            getAuthor:
+              $ref: '#/components/links/getAuthor'
+            getTag:
+              $ref: '#/components/links/getTag'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                  type: object
   /todo/{id}:
     parameters:
       - name: id
@@ -129,20 +127,15 @@ paths:
                 $ref: '#/components/schemas/Todo'
           links:
             update:
-              operationId: updateTodo
-              x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/update
-              parameters:
-                id: $response.body#/id
-                title: $response.body#/title
-                completed: $response.body#/completed
+              $ref: '#/components/links/update'
             delete:
-              operationId: deleteTodoById
-              x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/delete
-              parameters:
-                id: $response.body#/id
+              $ref: '#/components/links/delete'
             listAll:
-              operationId: listTodos
-              x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/listAll
+              $ref: '#/components/links/listAll'
+            getAuthor:
+              $ref: '#/components/links/getAuthor'
+            getTag:
+              $ref: '#/components/links/getTag'
     put:
       summary: Update an existing todo
       operationId: updateTodo
@@ -163,20 +156,15 @@ paths:
                 $ref: '#/components/schemas/Todo'
           links:
             update:
-              operationId: updateTodo
-              x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/update
-              parameters:
-                id: $response.body#/id
-                title: $response.body#/title
-                completed: $response.body#/completed
+              $ref: '#/components/links/update'
             delete:
-              operationId: deleteTodoById
-              x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/delete
-              parameters:
-                id: $response.body#/id
+              $ref: '#/components/links/delete'
             listAll:
-              operationId: listTodos
-              x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/listAll
+              $ref: '#/components/links/listAll'
+            getAuthor:
+              $ref: '#/components/links/getAuthor'
+            getTag:
+              $ref: '#/components/links/getTag'
     delete:
       summary: Delete the todo
       operationId: deleteTodoById
@@ -207,7 +195,7 @@ paths:
       tags:
         - author
       responses:
-        '201':
+        '200':
           description: The author
           content:
             application/json:
@@ -225,12 +213,12 @@ paths:
           - '@id'
     get:
       summary: Gets an author by his todoId
-      x-@id: http://evolvable-by-design.github.io/vocabs/todomvc#getTtag
+      x-@id: http://evolvable-by-design.github.io/vocabs/todomvc#getTag
       operationId: getTag
       tags:
         - tag
       responses:
-        '201':
+        '200':
           description: The tag
           content:
             application/json:
@@ -290,12 +278,9 @@ components:
           type: boolean
           x-@id: http://evolvable-by-design.github.io/vocabs/todomvc#completed
     Tag:
-      x-@type: http://evolvable-by-design.github.io/vocabs/todomvc#Author
-      x-@id: http://evolvable-by-design.github.io/vocabs/todomvc#Author
+      x-@type: http://evolvable-by-design.github.io/vocabs/todomvc#tag
+      x-@id: http://evolvable-by-design.github.io/vocabs/todomvc#tag
       type: object
-      required:
-        - id
-        - name
       properties:
         todoId:
           type: string
@@ -310,9 +295,6 @@ components:
       x-@type: http://evolvable-by-design.github.io/vocabs/todomvc#Author
       x-@id: http://evolvable-by-design.github.io/vocabs/todomvc#Author
       type: object
-      required:
-        - id
-        - name
       properties:
         todoId:
           type: string
@@ -361,3 +343,36 @@ components:
           type: string
           minLength: 1
           x-@id: http://schema.org/DefinedTerm
+  links:
+        update:
+          operationId: updateTodo
+          x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/update
+          parameters:
+            id: $response.body#/id
+            title: $response.body#/title
+            completed: $response.body#/completed
+        delete:
+          operationId: deleteTodoById
+          x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/delete
+          parameters:
+            id: $response.body#/id
+        listAll:
+          operationId: listTodos
+          x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/listAll
+        getAuthor:
+          operationId: getAuthor
+          x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/getAuthor
+          parameters:
+            id: $response.body#/id
+        getTag:
+          operationId: getTag
+          x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/getTag
+          parameters:
+            id: $response.body#/id
+        createTodo:
+          operationId: createTodo
+          x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/create
+        deleteMany:
+          operationId: deleteTodosByStatus
+          x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/deleteMany
+          

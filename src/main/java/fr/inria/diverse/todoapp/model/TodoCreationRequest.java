@@ -1,11 +1,18 @@
 package fr.inria.diverse.todoapp.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.validation.constraints.NotBlank;
 
 public class TodoCreationRequest {
 
+    @JsonProperty("title")
+    @NotBlank(message = "Title is a mandatory field")
     private String todoTitle;
+    @NotBlank(message = "Author is a mandatory field")
     private String authorName;
-    private String tagName;
+    @NotBlank(message = "Tag is a mandatory field")
+    private String tag;
 
 
     public TodoCreationRequest() {
@@ -14,7 +21,7 @@ public class TodoCreationRequest {
     public TodoCreationRequest( String todoName, String authorName, String tagName) {
         this.todoTitle = todoName;
         this.authorName = authorName;
-        this.tagName = tagName;
+        this.tag = tagName;
     }
 
 
@@ -34,12 +41,12 @@ public class TodoCreationRequest {
         this.authorName = authorName;
     }
 
-    public String getTagName() {
-        return tagName;
+    public String getTag() {
+        return tag;
     }
 
-    public void setTagName(String tagName) {
-        this.tagName = tagName;
+    public void setTag(String tagName) {
+        this.tag = tagName;
     }
 
     

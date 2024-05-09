@@ -1,9 +1,7 @@
 package fr.inria.diverse.todoapp.model;
 
-import org.apache.catalina.connector.Response;
-import org.springframework.http.ResponseEntity;
+import java.util.UUID;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -13,7 +11,7 @@ public class Todo {
     
     @Id
     @GeneratedValue(generator = "uuid")
-    private String id;
+    private UUID id;
 
     private String title;
     private boolean completed;
@@ -26,11 +24,11 @@ public class Todo {
         this.completed = completed;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -42,7 +40,7 @@ public class Todo {
         this.title = title;
     }
 
-    public boolean isCompleted() {
+    public boolean getCompleted() {
         return completed;
     }
 

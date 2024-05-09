@@ -6,9 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.inria.diverse.todoapp.model.Author;
 import fr.inria.diverse.todoapp.model.Tag;
-import fr.inria.diverse.todoapp.repository.AuthorRepository;
 import fr.inria.diverse.todoapp.repository.TagRepository;
 
 @RestController
@@ -22,7 +20,7 @@ public class TagController {
     }
 
 
-       @GetMapping("/todo/{id}/author")
+       @GetMapping("/todo/{id}/tag")
     ResponseEntity<Tag> getTagByTodoId(@RequestParam String id) {
         return ResponseEntity.of(tagRepository.findById(id));
     }

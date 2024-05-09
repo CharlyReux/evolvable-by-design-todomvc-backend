@@ -7,8 +7,8 @@ import fr.inria.diverse.todoapp.model.Todo;
 
 public interface TodoRepository extends JpaRepository<Todo, String>{
 
-    List<Todo> findAllByStatus(boolean status);
-    List<Todo> deleteByStatus(boolean status);
+    List<Todo> findAllByCompleted(boolean completed);
+    void deleteByCompleted(boolean completed);
 
 }
 

@@ -315,7 +315,7 @@ components:
       required:
         - title
       properties:
-        title:
+        text:
           type: string
           minLength: 1
           x-@id: http://schema.org/name
@@ -338,7 +338,7 @@ components:
         - title
         - completed
       properties:
-        title:
+        text:
           type: string
           minLength: 1
           x-@id: http://schema.org/name
@@ -359,7 +359,7 @@ components:
           x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/update
           parameters:
             id: $response.body#/id
-            title: $response.body#/title
+            text: $response.body#/title
             completed: $response.body#/completed
         delete:
           operationId: deleteTodoById

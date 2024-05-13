@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public class TodoCreationRequest {
 
-    @JsonProperty("title")
+    @JsonProperty("text")
     @NotBlank(message = "Title is a mandatory field")
     private String todoTitle;
     @NotBlank(message = "Author is a mandatory field")

@@ -3,9 +3,13 @@ package fr.inria.diverse.todoapp.model;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Todo {
@@ -16,14 +20,15 @@ public class Todo {
 
     private String title;
     private boolean completed;
-    private LocalDateTime dueDate;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "infos_id",referencedColumnName = "infosId")
+    private Infos infos;
 
     public Todo() {
     }
 
-    public Todo(String title, LocalDateTime dueDate, boolean completed) {
+    public Todo(String title, boolean completed) {
         this.title = title;
-        this.dueDate = dueDate;
         this.completed = completed;
     }
 
@@ -63,12 +68,12 @@ public class Todo {
         }
     }
 
-    public LocalDateTime getDueDate() {
-        return dueDate;
+    public Infos getInfos() {
+        return infos;
     }
 
-    public void setDueDate(LocalDateTime dueDate) {
-        this.dueDate = dueDate;
+    public void setInfos(Infos infos) {
+        this.infos = infos;
     }
 
 }

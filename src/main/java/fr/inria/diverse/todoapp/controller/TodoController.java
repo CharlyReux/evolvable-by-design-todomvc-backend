@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.inria.diverse.todoapp.model.Author;
+import fr.inria.diverse.todoapp.model.Infos;
 import fr.inria.diverse.todoapp.model.Semantic;
 import fr.inria.diverse.todoapp.model.Tag;
 import fr.inria.diverse.todoapp.model.Todo;
@@ -110,22 +111,26 @@ public class TodoController {
         Tag tag = tagRepository.findById(id).get();
         tag.setNameIfNotNull(todoUpdateRequest.getTagName());
         tagRepository.save(tag);
-        Semantic<Todo> semanticTodo = Semantic.of(todo).withLinks(List.of("update", "delete", "listAll","getAuthor","getTag"));
+        Semantic<Todo> semanticTodo = Semantic.of(todo)
+                .withLinks(List.of("update", "delete", "listAll", "getAuthor", "getTag"));
         return ResponseEntity.ok(semanticTodo);
     }
 
     @PostMapping(value = "/todo", consumes = "application/json", produces = "application/json")
     ResponseEntity<Semantic<Todo>> createTodo(@Valid @RequestBody TodoCreationRequest todoCreationRequest) {
         // saving todo
-        Todo todo = new Todo(todoCreationRequest.getTodoTitle(),todoCreationRequest.getDueDate(), false);
-        todoRepository.save(todo);
+        Infos infos = new Infos(todoCreationRequest.getDueDate());
+        Todo todo = new Todo(todoCreationRequest.getTodoTitle(), false);
+        todo.setInfos(infos);
+        todo = todoRepository.save(todo);
         // saving author
         Author author = new Author(todo.getId(), todoCreationRequest.getAuthorName());
         authorRepository.save(author);
         // saving tag
         Tag tag = new Tag(todo.getId(), todoCreationRequest.getTag());
         tagRepository.save(tag);
-        Semantic<Todo> semanticTodo = Semantic.of(todo).withLinks(List.of("update", "delete", "listAll","getAuthor","getTag"));
+        Semantic<Todo> semanticTodo = Semantic.of(todo)
+                .withLinks(List.of("update", "delete", "listAll", "getAuthor", "getTag"));
         return ResponseEntity.status(HttpStatus.CREATED).body(semanticTodo);
     }
 

@@ -277,6 +277,9 @@ components:
         completed:
           type: boolean
           x-@id: http://evolvable-by-design.github.io/vocabs/todomvc#completed
+        infos:
+          type: object
+          $ref: '#/components/schemas/Infos'
     Tag:
       x-@type: http://evolvable-by-design.github.io/vocabs/todomvc#tag
       x-@id: http://evolvable-by-design.github.io/vocabs/todomvc#tag
@@ -317,7 +320,7 @@ components:
         dueDate:
           type: string
           description: The due date of the todo in the format CCYY-MM-DDThh:mm:ssZ
-          format: date-time # todo test that
+          format: date-time
           x-@id: http://schema.org/DateTime
         authorName:
           type: string
@@ -327,6 +330,14 @@ components:
           type: string
           minLength: 1
           x-@id: http://schema.org/DefinedTerm
+    Infos:
+      type: object
+      properties:
+        dueDate:
+          type: string
+          description: The due date of the todo in the format CCYY-MM-DDThh:mm:ssZ
+          format: date-time
+          x-@id: http://schema.org/DateTime
     TodoUpdateRequest:
       type: object
       required:

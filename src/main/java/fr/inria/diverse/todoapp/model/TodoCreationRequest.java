@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class TodoCreationRequest {
 
@@ -17,6 +18,7 @@ public class TodoCreationRequest {
     private String authorName;
     @NotBlank(message = "Tag is a mandatory field")
     private String tag;
+    @NotNull(message = "Due date is a mandatory field")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dueDate;
 

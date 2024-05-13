@@ -32,6 +32,12 @@ paths:
       responses:
         '204':
           description: Confirmation
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                  type: object
   /todo:
     get:
       summary: Get all the todos
@@ -170,6 +176,12 @@ paths:
             listAll:
               operationId: listTodos
               x-@relation: http://evolvable-by-design.github.io/vocabs/todomvc#rel/listAll
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                  type: object
   /todo/{id}/details:
     parameters:
     - name: id

@@ -132,7 +132,7 @@ paths:
               $ref: '#/components/links/listAll'
             getDetails:
               $ref: '#/components/links/getDetails'
-    put:
+    post:
       summary: Update an existing todo
       operationId: updateTodo
       x-@id: http://evolvable-by-design.github.io/vocabs/todomvc#updateTodo
@@ -305,7 +305,7 @@ components:
           type: string
           minLength: 1
           x-@id: http://schema.org/givenName
-        tag:
+        tagName:
           type: string
           minLength: 1
           x-@id: http://schema.org/DefinedTerm

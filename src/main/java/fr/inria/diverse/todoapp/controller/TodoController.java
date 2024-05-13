@@ -94,7 +94,7 @@ public class TodoController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/todo/{id}")
+    @PostMapping("/todo/{id}")
     ResponseEntity<Semantic<Todo>> updateTodo(@Valid @RequestBody TodoUpdateRequest todoUpdateRequest,
             @PathVariable UUID id) {
         // saving todo

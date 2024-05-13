@@ -18,12 +18,30 @@ public class Infos {
     @Column(name = "infosId")
     private Long id;
     private LocalDateTime dueDate;
+    private boolean completed;
 
     public Infos() {
     }
 
-    public Infos(LocalDateTime dueDate) {
+    public Infos(LocalDateTime dueDate, boolean completed) {
         this.dueDate = dueDate;
+        this.completed = completed;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     public LocalDateTime getDueDate() {
@@ -32,5 +50,11 @@ public class Infos {
 
     public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public void setCompletedIfNotNull(Boolean completed) {
+        if (completed != null) {
+            this.setCompleted(completed);
+        }
     }
 }

@@ -1,6 +1,5 @@
 package fr.inria.diverse.todoapp.model;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 import jakarta.persistence.CascadeType;
@@ -19,7 +18,6 @@ public class Todo {
     private UUID id;
 
     private String title;
-    private boolean completed;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "infos_id",referencedColumnName = "infosId")
     private Infos infos;
@@ -27,9 +25,8 @@ public class Todo {
     public Todo() {
     }
 
-    public Todo(String title, boolean completed) {
+    public Todo(String title) {
         this.title = title;
-        this.completed = completed;
     }
 
     public UUID getId() {
@@ -48,23 +45,10 @@ public class Todo {
         this.title = title;
     }
 
-    public boolean getCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
-    }
 
     public void setTitleIfNotNull(String todoName) {
         if (todoName != null) {
             this.setTitle(todoName);
-        }
-    }
-
-    public void setCompletedIfNotNull(Boolean completed) {
-        if (completed != null) {
-            this.setCompleted(completed);
         }
     }
 

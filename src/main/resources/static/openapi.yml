@@ -201,10 +201,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Author'     
-  /todo/{id}/tag:
+  /todo/tag:
     parameters:
     - name: id
-      in: path
+      in: query
       required: true
       schema:
         type: string

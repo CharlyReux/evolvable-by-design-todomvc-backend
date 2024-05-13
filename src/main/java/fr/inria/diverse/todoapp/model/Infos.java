@@ -17,6 +17,7 @@ public class Infos {
     @Id
     @Column(name = "infosId")
     private Long id;
+    @JsonIgnore
     private LocalDateTime dueDate;
     private boolean completed;
 

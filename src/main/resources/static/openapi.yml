@@ -274,9 +274,6 @@ components:
           type: string
           minLength: 1
           x-@id: http://schema.org/name
-        completed:
-          type: boolean
-          x-@id: http://evolvable-by-design.github.io/vocabs/todomvc#completed
         infos:
           type: object
           $ref: '#/components/schemas/Infos'
@@ -338,6 +335,12 @@ components:
           description: The due date of the todo in the format CCYY-MM-DDThh:mm:ssZ
           format: date-time
           x-@id: http://schema.org/DateTime
+        status:
+          type: string
+          enum:
+            - completed
+            - active
+          x-@id: http://evolvable-by-design.github.io/vocabs/todomvc#status
     TodoUpdateRequest:
       type: object
       required:

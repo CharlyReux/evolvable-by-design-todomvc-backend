@@ -9,14 +9,14 @@ import jakarta.persistence.Id;
 public class Tag {
     @Id
     private UUID todoId;
-    private String name;
+    private String tagName;
 
     public Tag() {
     }
 
     public Tag(UUID id, String name) {
         this.todoId = id;
-        this.name = name;
+        this.tagName = name;
     }
     public UUID getTodoId() {
         return todoId;
@@ -24,16 +24,16 @@ public class Tag {
     public void setTodoId(UUID id) {
         this.todoId = id;
     }
-    public String getName() {
-        return name;
+    public String getTagName() {
+        return tagName;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setTagName(String name) {
+        this.tagName = name;
     }
 
     public void setNameIfNotNull(String tagName) {
         if(tagName != null) {
-            this.setName(tagName);
+            this.setTagName(tagName);
         }
     }
 

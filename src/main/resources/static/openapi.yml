@@ -270,6 +270,11 @@ components:
           x-@id:
             - http://evolvable-by-design.github.io/vocabs/todomvc#todoId
             - '@id'
+        dueDate:
+          type: string
+          description: The due date of the todo in the format CCYY-MM-DDThh:mm:ssZ
+          format: date-time
+          x-@id: http://schema.org/DateTime
         title:
           type: string
           minLength: 1

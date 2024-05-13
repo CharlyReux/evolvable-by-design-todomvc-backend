@@ -110,14 +110,15 @@ public class TodoController {
         Tag tag = tagRepository.findById(id).get();
         tag.setNameIfNotNull(todoUpdateRequest.getTagName());
         tagRepository.save(tag);
-        Semantic<Todo> semanticTodo = Semantic.of(todo).withLinks(List.of("update", "delete", "listAll","getAuthor","getTag"));
+        Semantic<Todo> semanticTodo = Semantic.of(todo)
+                .withLinks(List.of("update", "delete", "listAll", "getAuthor", "getTag"));
         return ResponseEntity.ok(semanticTodo);
     }
 
     @PostMapping(value = "/todo", consumes = "application/json", produces = "application/json")
     ResponseEntity<Semantic<Todo>> createTodo(@Valid @RequestBody TodoCreationRequest todoCreationRequest) {
         // saving todo
-        Todo todo = new Todo(todoCreationRequest.getTodoTitle(),todoCreationRequest.getDueDate(), false);
+        Todo todo = new Todo(todoCreationRequest.getTodoTitle(), null, false);
         todoRepository.save(todo);
         // saving author
         Author author = new Author(todo.getId(), todoCreationRequest.getAuthorName());
@@ -125,7 +126,8 @@ public class TodoController {
         // saving tag
         Tag tag = new Tag(todo.getId(), todoCreationRequest.getTag());
         tagRepository.save(tag);
-        Semantic<Todo> semanticTodo = Semantic.of(todo).withLinks(List.of("update", "delete", "listAll","getAuthor","getTag"));
+        Semantic<Todo> semanticTodo = Semantic.of(todo)
+                .withLinks(List.of("update", "delete", "listAll", "getAuthor", "getTag"));
         return ResponseEntity.status(HttpStatus.CREATED).body(semanticTodo);
     }
 

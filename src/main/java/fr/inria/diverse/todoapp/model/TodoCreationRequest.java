@@ -17,17 +17,14 @@ public class TodoCreationRequest {
     private String authorName;
     @NotBlank(message = "Tag is a mandatory field")
     private String tag;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime dueDate;
 
     public TodoCreationRequest() {
     }
 
-    public TodoCreationRequest( String todoName, String authorName, String tagName, LocalDateTime dueDate) {
+    public TodoCreationRequest( String todoName, String authorName, String tagName) {
         this.todoTitle = todoName;
         this.authorName = authorName;
         this.tag = tagName;
-        this.dueDate = dueDate;
     }
 
 
@@ -53,14 +50,6 @@ public class TodoCreationRequest {
 
     public void setTag(String tagName) {
         this.tag = tagName;
-    }
-
-    public LocalDateTime getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(LocalDateTime dueDate) {
-        this.dueDate = dueDate;
     }
 
     

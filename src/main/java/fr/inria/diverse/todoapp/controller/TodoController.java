@@ -52,7 +52,7 @@ public class TodoController {
         this.authorRepository = authorRepository;
     }
 
-    @GetMapping("/todos")
+    @GetMapping("/todo")
     ResponseEntity<Semantic<TodoCollection>> getAllTodos(@RequestParam(required = false) String status) {
         if (status == null || status.equals("all")) {
 

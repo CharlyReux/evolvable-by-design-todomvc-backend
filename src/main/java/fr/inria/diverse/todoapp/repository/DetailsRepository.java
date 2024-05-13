@@ -4,8 +4,8 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import fr.inria.diverse.todoapp.model.Tag;
+import fr.inria.diverse.todoapp.model.Details;
 
-public interface TagRepository extends JpaRepository<Tag, UUID> {
-
+public interface DetailsRepository extends JpaRepository<Details, UUID>{
+    
 }

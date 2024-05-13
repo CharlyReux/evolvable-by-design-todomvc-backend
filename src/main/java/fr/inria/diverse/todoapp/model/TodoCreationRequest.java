@@ -16,7 +16,7 @@ public class TodoCreationRequest {
     @NotBlank(message = "Author is a mandatory field")
     private String authorName;
     @NotBlank(message = "Tag is a mandatory field")
-    private String tag;
+    private String tagName;
 
     public TodoCreationRequest() {
     }
@@ -24,7 +24,7 @@ public class TodoCreationRequest {
     public TodoCreationRequest( String todoName, String authorName, String tagName) {
         this.todoTitle = todoName;
         this.authorName = authorName;
-        this.tag = tagName;
+        this.tagName = tagName;
     }
 
 
@@ -44,12 +44,12 @@ public class TodoCreationRequest {
         this.authorName = authorName;
     }
 
-    public String getTag() {
-        return tag;
+    public String getTagName() {
+        return tagName;
     }
 
-    public void setTag(String tagName) {
-        this.tag = tagName;
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
     

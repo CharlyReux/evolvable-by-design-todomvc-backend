@@ -23,15 +23,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.inria.diverse.todoapp.model.Author;
+import fr.inria.diverse.todoapp.model.Details;
 import fr.inria.diverse.todoapp.model.Semantic;
-import fr.inria.diverse.todoapp.model.Tag;
 import fr.inria.diverse.todoapp.model.Todo;
 import fr.inria.diverse.todoapp.model.TodoCollection;
 import fr.inria.diverse.todoapp.model.TodoCreationRequest;
 import fr.inria.diverse.todoapp.model.TodoUpdateRequest;
-import fr.inria.diverse.todoapp.repository.AuthorRepository;
-import fr.inria.diverse.todoapp.repository.TagRepository;
+import fr.inria.diverse.todoapp.repository.DetailsRepository;
 import fr.inria.diverse.todoapp.repository.TodoRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -42,14 +40,11 @@ import org.springframework.http.HttpStatus;
 public class TodoController {
 
     private final TodoRepository todoRepository;
-    private final TagRepository tagRepository;
-    private final AuthorRepository authorRepository;
+    private final DetailsRepository detailsRepository;
 
-    public TodoController(TodoRepository todoRepository, TagRepository tagRepository,
-            AuthorRepository authorRepository) {
+    public TodoController(TodoRepository todoRepository, DetailsRepository detailsRepository) {
         this.todoRepository = todoRepository;
-        this.tagRepository = tagRepository;
-        this.authorRepository = authorRepository;
+        this.detailsRepository = detailsRepository;
     }
 
     @GetMapping("/todo")
@@ -80,8 +75,7 @@ public class TodoController {
     @Transactional
     ResponseEntity<Void> deleteTodoById(@PathVariable UUID id) {
         todoRepository.deleteById(id);
-        tagRepository.deleteById(id);
-        authorRepository.deleteById(id);
+        detailsRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
@@ -94,8 +88,7 @@ public class TodoController {
         Boolean statusBool = status.equals("completed") ? true : false;
         List<Todo> todos = todoRepository.findAllByCompleted(statusBool);
         for (Todo todo : todos) {
-            tagRepository.deleteById(todo.getId());
-            authorRepository.deleteById(todo.getId());
+            detailsRepository.deleteById(todo.getId());
         }
         todoRepository.deleteByCompleted(statusBool);
         return ResponseEntity.noContent().build();
@@ -109,16 +102,15 @@ public class TodoController {
         todo.setTitleIfNotNull(todoUpdateRequest.getTodoName());
         todo.setCompletedIfNotNull(todoUpdateRequest.getCompleted());
         todoRepository.save(todo);
-        // saving author
-        Author author = authorRepository.findById(id).get();
-        author.setNameIfNotNull(todoUpdateRequest.getAuthorName());
-        authorRepository.save(author);
-        // saving tag
-        Tag tag = tagRepository.findById(id).get();
-        tag.setNameIfNotNull(todoUpdateRequest.getTagName());
-        tagRepository.save(tag);
+
+        //saving details
+        Details details = detailsRepository.findById(id).get();
+        details.setTagNameIfNotNull(todoUpdateRequest.getTagName());
+        details.setAuthorNameIfNotNull(todoUpdateRequest.getAuthorName());
+        detailsRepository.save(details);
+
         Semantic<Todo> semanticTodo = Semantic.of(todo)
-                .withLinks(List.of("update", "delete", "listAll", "getAuthor", "getTag"));
+                .withLinks(List.of("update", "delete", "listAll", "getDetails"));
         return ResponseEntity.ok(semanticTodo);
     }
 
@@ -126,15 +118,13 @@ public class TodoController {
     ResponseEntity<Semantic<Todo>> createTodo(@Valid @RequestBody TodoCreationRequest todoCreationRequest) {
         // saving todo
         Todo todo = new Todo(todoCreationRequest.getTodoTitle(), null, false);
-        todoRepository.save(todo);
-        // saving author
-        Author author = new Author(todo.getId(), todoCreationRequest.getAuthorName());
-        authorRepository.save(author);
-        // saving tag
-        Tag tag = new Tag(todo.getId(), todoCreationRequest.getTag());
-        tagRepository.save(tag);
+        todo = todoRepository.save(todo);
+        //saving details
+        Details details = new Details(todo.getId(), todoCreationRequest.getTagName(), todoCreationRequest.getAuthorName());
+        detailsRepository.save(details);
+
         Semantic<Todo> semanticTodo = Semantic.of(todo)
-                .withLinks(List.of("update", "delete", "listAll", "getAuthor", "getTag"));
+                .withLinks(List.of("update", "delete", "listAll", "getDetails"));
         return ResponseEntity.status(HttpStatus.CREATED).body(semanticTodo);
     }
 

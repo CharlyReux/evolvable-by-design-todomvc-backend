@@ -23,13 +23,11 @@ paths:
           in: query
           description: The status expected for the queried todos
           x-@id: http://evolvable-by-design.github.io/vocabs/todomvc#status
-          required: false
+          required: true
           schema:
             type: string
             enum:
-              - all
               - completed
-              - active
             default: completed
       responses:
         '204':

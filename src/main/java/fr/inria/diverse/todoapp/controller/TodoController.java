@@ -74,6 +74,10 @@ public class TodoController {
     @DeleteMapping("/todo/{id}")
     @Transactional
     ResponseEntity<Void> deleteTodoById(@PathVariable UUID id) {
+        Todo todo = todoRepository.findById(id).get();
+        if (!todo.getCompleted()) {
+            return new ResponseEntity("Todo not completed", HttpStatus.BAD_REQUEST);
+        }
         todoRepository.deleteById(id);
         detailsRepository.deleteById(id);
         return ResponseEntity.noContent().build();
@@ -83,8 +87,8 @@ public class TodoController {
     @DeleteMapping("/todos")
     @Transactional
     ResponseEntity<Void> deleteTodosByStatus(@RequestParam String status) {
-        if (status == null || status.equals("all"))
-            todoRepository.deleteAll();
+        if (!status.equals("completed"))
+            return new ResponseEntity("Todo not completed", HttpStatus.BAD_REQUEST);
         Boolean statusBool = status.equals("completed") ? true : false;
         List<Todo> todos = todoRepository.findAllByCompleted(statusBool);
         for (Todo todo : todos) {
@@ -103,7 +107,7 @@ public class TodoController {
         todo.setCompletedIfNotNull(todoUpdateRequest.getCompleted());
         todoRepository.save(todo);
 
-        //saving details
+        // saving details
         Details details = detailsRepository.findById(id).get();
         details.setTagNameIfNotNull(todoUpdateRequest.getTagName());
         details.setAuthorNameIfNotNull(todoUpdateRequest.getAuthorName());
@@ -119,8 +123,9 @@ public class TodoController {
         // saving todo
         Todo todo = new Todo(todoCreationRequest.getTodoTitle(), null, false);
         todo = todoRepository.save(todo);
-        //saving details
-        Details details = new Details(todo.getId(), todoCreationRequest.getTagName(), todoCreationRequest.getAuthorName());
+        // saving details
+        Details details = new Details(todo.getId(), todoCreationRequest.getTagName(),
+                todoCreationRequest.getAuthorName());
         detailsRepository.save(details);
 
         Semantic<Todo> semanticTodo = Semantic.of(todo)

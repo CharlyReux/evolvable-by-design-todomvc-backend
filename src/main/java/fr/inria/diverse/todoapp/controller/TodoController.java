@@ -81,6 +81,8 @@ public class TodoController {
     @Transactional
     ResponseEntity<Void> deleteTodoById(@PathVariable UUID id) {
         todoRepository.deleteById(id);
+        tagRepository.deleteById(id);
+        authorRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
@@ -91,6 +93,11 @@ public class TodoController {
         if (status == null || status.equals("all"))
             todoRepository.deleteAll();
         Boolean statusBool = status.equals("completed") ? true : false;
+        List<Todo> todos = todoRepository.findAllByCompleted(statusBool);
+        for (Todo todo : todos) {
+            tagRepository.deleteById(todo.getId());
+            authorRepository.deleteById(todo.getId());
+        }
         todoRepository.deleteByCompleted(statusBool);
         return ResponseEntity.noContent().build();
     }

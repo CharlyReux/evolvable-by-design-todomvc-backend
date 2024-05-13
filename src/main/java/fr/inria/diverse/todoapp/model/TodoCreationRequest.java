@@ -1,5 +1,9 @@
 package fr.inria.diverse.todoapp.model;
 
+import java.time.LocalDateTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.NotBlank;
@@ -13,15 +17,17 @@ public class TodoCreationRequest {
     private String authorName;
     @NotBlank(message = "Tag is a mandatory field")
     private String tag;
-
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime dueDate;
 
     public TodoCreationRequest() {
     }
 
-    public TodoCreationRequest( String todoName, String authorName, String tagName) {
+    public TodoCreationRequest( String todoName, String authorName, String tagName, LocalDateTime dueDate) {
         this.todoTitle = todoName;
         this.authorName = authorName;
         this.tag = tagName;
+        this.dueDate = dueDate;
     }
 
 
@@ -47,6 +53,14 @@ public class TodoCreationRequest {
 
     public void setTag(String tagName) {
         this.tag = tagName;
+    }
+
+    public LocalDateTime getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDateTime dueDate) {
+        this.dueDate = dueDate;
     }
 
     

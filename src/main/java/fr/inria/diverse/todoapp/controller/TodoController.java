@@ -52,7 +52,6 @@ public class TodoController {
         this.authorRepository = authorRepository;
     }
 
-    // todo - Add the semantic links to the response
     @GetMapping("/todos")
     ResponseEntity<Semantic<TodoCollection>> getAllTodos(@RequestParam(required = false) String status) {
         if (status == null || status.equals("all")) {
@@ -118,7 +117,7 @@ public class TodoController {
     @PostMapping(value = "/todo", consumes = "application/json", produces = "application/json")
     ResponseEntity<Semantic<Todo>> createTodo(@Valid @RequestBody TodoCreationRequest todoCreationRequest) {
         // saving todo
-        Todo todo = new Todo(todoCreationRequest.getTodoTitle(), false);
+        Todo todo = new Todo(todoCreationRequest.getTodoTitle(),todoCreationRequest.getDueDate(), false);
         todoRepository.save(todo);
         // saving author
         Author author = new Author(todo.getId(), todoCreationRequest.getAuthorName());

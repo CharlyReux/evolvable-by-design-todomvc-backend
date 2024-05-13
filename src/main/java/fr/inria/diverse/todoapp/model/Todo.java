@@ -1,5 +1,6 @@
 package fr.inria.diverse.todoapp.model;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
@@ -8,19 +9,21 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Todo {
-    
+
     @Id
     @GeneratedValue(generator = "uuid")
     private UUID id;
 
     private String title;
     private boolean completed;
+    private LocalDateTime dueDate;
 
     public Todo() {
     }
 
-    public Todo(String title, boolean completed) {
+    public Todo(String title, LocalDateTime dueDate, boolean completed) {
         this.title = title;
+        this.dueDate = dueDate;
         this.completed = completed;
     }
 
@@ -49,19 +52,23 @@ public class Todo {
     }
 
     public void setTitleIfNotNull(String todoName) {
-        if(todoName != null) {
+        if (todoName != null) {
             this.setTitle(todoName);
         }
     }
 
     public void setCompletedIfNotNull(Boolean completed) {
-        if(completed != null) {
+        if (completed != null) {
             this.setCompleted(completed);
         }
     }
 
-    
+    public LocalDateTime getDueDate() {
+        return dueDate;
+    }
 
-
+    public void setDueDate(LocalDateTime dueDate) {
+        this.dueDate = dueDate;
+    }
 
 }

@@ -131,7 +131,7 @@ public class TodoController {
         Author author = new Author(todo.getId(), todoCreationRequest.getAuthorName());
         authorRepository.save(author);
         // saving tag
-        Tag tag = new Tag(todo.getId(), todoCreationRequest.getTag());
+        Tag tag = new Tag(todo.getId(), todoCreationRequest.getTagName());
         tagRepository.save(tag);
         Semantic<Todo> semanticTodo = Semantic.of(todo)
                 .withLinks(List.of("update", "delete", "listAll", "getAuthor", "getTag"));

@@ -308,6 +308,9 @@ components:
       type: object
       required:
         - title
+        - duedate
+        - authorName
+        - tagName
       properties:
         title:
           type: string
@@ -322,7 +325,7 @@ components:
           type: string
           minLength: 1
           x-@id: http://schema.org/givenName
-        tag:
+        tagName:
           type: string
           minLength: 1
           x-@id: http://schema.org/DefinedTerm
@@ -353,7 +356,7 @@ components:
           type: string
           minLength: 1
           x-@id: http://schema.org/givenName
-        tag:
+        tagName:
           type: string
           minLength: 1
           x-@id: http://schema.org/DefinedTerm

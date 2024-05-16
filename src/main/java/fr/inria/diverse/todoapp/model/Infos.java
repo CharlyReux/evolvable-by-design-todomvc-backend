@@ -1,6 +1,5 @@
 package fr.inria.diverse.todoapp.model;
 
-import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -18,13 +17,13 @@ public class Infos {
     @Column(name = "infosId")
     private Long id;
     @JsonIgnore
-    private LocalDateTime dueDate;
+    private String dueDate;
     private boolean completed;
 
     public Infos() {
     }
 
-    public Infos(LocalDateTime dueDate, boolean completed) {
+    public Infos(String dueDate, boolean completed) {
         this.dueDate = dueDate;
         this.completed = completed;
     }
@@ -45,11 +44,11 @@ public class Infos {
         this.completed = completed;
     }
 
-    public LocalDateTime getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDateTime dueDate) {
+    public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
 

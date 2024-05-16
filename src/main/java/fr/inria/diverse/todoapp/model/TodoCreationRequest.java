@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class TodoCreationRequest {
 
@@ -18,12 +19,13 @@ public class TodoCreationRequest {
     @NotBlank(message = "Tag is a mandatory field")
     private String tagName;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime dueDate;
+    @NotNull
+    private String dueDate;
 
     public TodoCreationRequest() {
     }
 
-    public TodoCreationRequest( String todoName, String authorName, String tagName, LocalDateTime dueDate) {
+    public TodoCreationRequest( String todoName, String authorName, String tagName, String dueDate) {
         this.todoTitle = todoName;
         this.authorName = authorName;
         this.tagName = tagName;
@@ -55,11 +57,11 @@ public class TodoCreationRequest {
         this.tagName = tagName;
     }
 
-    public LocalDateTime getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDateTime dueDate) {
+    public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
 

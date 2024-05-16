@@ -322,13 +322,13 @@ components:
         dueDate:
           type: string
           description: The due date of the todo in the format CCYY-MM-DDThh:mm:ssZ
-          format: date-time # todo test that
+          format: date-time 
           x-@id: http://schema.org/DateTime
         authorName:
           type: string
           minLength: 1
           x-@id: http://schema.org/givenName
-        tag:
+        tagName:
           type: string
           minLength: 1
           x-@id: http://schema.org/DefinedTerm
@@ -349,7 +349,7 @@ components:
           type: string
           minLength: 1
           x-@id: http://schema.org/givenName
-        tag:
+        tagName:
           type: string
           minLength: 1
           x-@id: http://schema.org/DefinedTerm

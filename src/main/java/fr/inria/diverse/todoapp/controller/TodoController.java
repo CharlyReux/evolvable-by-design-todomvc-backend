@@ -56,8 +56,6 @@ public class TodoController {
     @GetMapping("/todos")
     ResponseEntity<Semantic<TodoCollection>> getAllTodos(@RequestParam(required = false) String status) {
         if (status == null || status.equals("all")) {
-            List<Todo> allTodos = todoRepository.findAll();
-            allTodos.stream().forEach(todo-> todo.setDueDate("now"));
             return ResponseEntity.ok(Semantic.of(new TodoCollection(todoRepository.findAll()))
                     .withLinks(List.of("createTodo", "deleteMany")));
         }

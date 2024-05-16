@@ -1,5 +1,6 @@
 package fr.inria.diverse.todoapp.controller;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +56,8 @@ public class TodoController {
     @GetMapping("/todos")
     ResponseEntity<Semantic<TodoCollection>> getAllTodos(@RequestParam(required = false) String status) {
         if (status == null || status.equals("all")) {
-
+            List<Todo> allTodos = todoRepository.findAll();
+            allTodos.stream().forEach(todo-> todo.setDueDate("now"));
             return ResponseEntity.ok(Semantic.of(new TodoCollection(todoRepository.findAll()))
                     .withLinks(List.of("createTodo", "deleteMany")));
         }
@@ -89,8 +91,10 @@ public class TodoController {
     @DeleteMapping("/todos")
     @Transactional
     ResponseEntity<Void> deleteTodosByStatus(@RequestParam String status) {
-        if (status == null || status.equals("all"))
+        if (status == null || status.equals("all")){
             todoRepository.deleteAll();
+            return ResponseEntity.noContent().build();
+        }
         Boolean statusBool = status.equals("completed") ? true : false;
         List<Todo> todos = todoRepository.findAllByCompleted(statusBool);
         for (Todo todo : todos) {

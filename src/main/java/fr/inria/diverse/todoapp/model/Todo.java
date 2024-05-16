@@ -1,6 +1,5 @@
 package fr.inria.diverse.todoapp.model;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
@@ -16,12 +15,12 @@ public class Todo {
 
     private String title;
     private boolean completed;
-    private LocalDateTime dueDate;
+    private String dueDate;
 
     public Todo() {
     }
 
-    public Todo(String title, LocalDateTime dueDate, boolean completed) {
+    public Todo(String title, String dueDate, boolean completed) {
         this.title = title;
         this.dueDate = dueDate;
         this.completed = completed;
@@ -63,11 +62,11 @@ public class Todo {
         }
     }
 
-    public LocalDateTime getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDateTime dueDate) {
+    public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
 

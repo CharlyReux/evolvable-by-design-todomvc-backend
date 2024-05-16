@@ -17,7 +17,7 @@ public class TodoCreationRequest {
     @NotBlank(message = "Author is a mandatory field")
     private String authorName;
     @NotBlank(message = "Tag is a mandatory field")
-    private String tag;
+    private String tagName;
     @NotNull(message = "Due date is a mandatory field")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dueDate;
@@ -28,7 +28,7 @@ public class TodoCreationRequest {
     public TodoCreationRequest( String todoName, String authorName, String tagName, LocalDateTime dueDate) {
         this.todoTitle = todoName;
         this.authorName = authorName;
-        this.tag = tagName;
+        this.tagName = tagName;
         this.dueDate = dueDate;
     }
 
@@ -49,12 +49,12 @@ public class TodoCreationRequest {
         this.authorName = authorName;
     }
 
-    public String getTag() {
-        return tag;
+    public String getTagName() {
+        return tagName;
     }
 
-    public void setTag(String tagName) {
-        this.tag = tagName;
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
     public LocalDateTime getDueDate() {

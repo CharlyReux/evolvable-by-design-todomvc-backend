@@ -17,20 +17,20 @@ public class Infos {
     @Id
     @Column(name = "infosId")
     private Long id;
-    private LocalDateTime dueDate;
+    private String dueDate;
 
     public Infos() {
     }
 
-    public Infos(LocalDateTime dueDate) {
+    public Infos(String dueDate) {
         this.dueDate = dueDate;
     }
 
-    public LocalDateTime getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDateTime dueDate) {
+    public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
 }

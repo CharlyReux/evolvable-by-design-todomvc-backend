@@ -2,6 +2,8 @@ package fr.inria.diverse.todoapp.model;
 
 import java.time.LocalDateTime;
 
+import javax.print.DocFlavor.STRING;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,12 +22,12 @@ public class TodoCreationRequest {
     private String tagName;
     @NotNull(message = "Due date is a mandatory field")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime dueDate;
+    private String dueDate;
 
     public TodoCreationRequest() {
     }
 
-    public TodoCreationRequest( String todoName, String authorName, String tagName, LocalDateTime dueDate) {
+    public TodoCreationRequest( String todoName, String authorName, String tagName, String dueDate) {
         this.todoTitle = todoName;
         this.authorName = authorName;
         this.tagName = tagName;
@@ -57,11 +59,11 @@ public class TodoCreationRequest {
         this.tagName = tagName;
     }
 
-    public LocalDateTime getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDateTime dueDate) {
+    public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
 

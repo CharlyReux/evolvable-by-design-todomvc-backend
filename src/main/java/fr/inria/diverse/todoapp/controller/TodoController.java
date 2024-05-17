@@ -125,7 +125,7 @@ public class TodoController {
     @PostMapping(value = "/todo", consumes = "application/json", produces = "application/json")
     ResponseEntity<Semantic<Todo>> createTodo(@Valid @RequestBody TodoCreationRequest todoCreationRequest) {
         // saving todo
-        Todo todo = new Todo(todoCreationRequest.getTodoTitle(), null, false);
+        Todo todo = new Todo(todoCreationRequest.getTodoTitle(), "no dueDate", false);
         todoRepository.save(todo);
         // saving author
         Author author = new Author(todo.getId(), todoCreationRequest.getAuthorName());

@@ -11,7 +11,7 @@ public class TodoCollection {
 
     public TodoCollection(List<Todo> todos) {
         this.todos = todos.stream()
-                .map(todo -> Semantic.of(todo).withLinks(List.of("update", "delete", "list","getAuthor","getTag")))
+                .map(todo -> Semantic.of(todo).withLinks(List.of("update", "delete", "list","getDetails")))
                 .collect(Collectors.toList());
     }
 

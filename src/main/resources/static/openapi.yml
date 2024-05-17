@@ -308,6 +308,9 @@ components:
       type: object
       required:
         - title
+        - dueDate
+        - authorName
+        - tagName
       properties:
         title:
           type: string

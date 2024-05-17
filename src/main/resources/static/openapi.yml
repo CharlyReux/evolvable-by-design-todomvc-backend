@@ -275,6 +275,8 @@ components:
       type: object
       required:
         - title
+        - authorName
+        - tagName
       properties:
         text:
           type: string
@@ -291,7 +293,6 @@ components:
     TodoUpdateRequest:
       type: object
       required:
-        - title
         - completed
       properties:
         text:

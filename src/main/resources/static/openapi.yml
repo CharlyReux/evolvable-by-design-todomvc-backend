@@ -291,7 +291,6 @@ components:
     TodoUpdateRequest:
       type: object
       required:
-        - title
         - completed
       properties:
         text:

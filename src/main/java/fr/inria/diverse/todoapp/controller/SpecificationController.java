@@ -2,6 +2,7 @@ package fr.inria.diverse.todoapp.controller;
 
 import java.io.IOException;
 
+import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,9 +21,15 @@ public class SpecificationController {
 
         final var yamlReader = new ObjectMapper(new YAMLFactory());
         final var obj = yamlReader.readValue(openApiDocumentationUrl, Object.class);
-
+        
         final var jsonWriter = new ObjectMapper();
-        return ResponseEntity.ok(jsonWriter.writeValueAsString(obj));
+        JSONObject returnOpenAPIValue = new JSONObject(jsonWriter.writeValueAsString(obj));
+        
+        if(System.getenv("CODESPACE_NAME")!=null){
+            returnOpenAPIValue.getJSONArray("servers").getJSONObject(0).put("url", "https://"+System.getenv("CODESPACE_NAME")+"-8080.app.github.dev/rest");
+        }
+
+        return ResponseEntity.ok(returnOpenAPIValue.toString());
 
     }
 }
